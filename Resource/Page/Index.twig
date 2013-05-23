@@ -2,12 +2,26 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>BEAR.Sunday</title>
+    <title>File Uploader</title>
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <script src="/assets/js/jquery.js"></script>
 </head>
 <body>
-    <div class="container"><h2>{{greeting}} (twig)</h2></div>
+<form method="post" action="/storefiles" enctype="multipart/form-data">
+    <input type="file" name="selfintro" />
+    <input type="submit" value="upload" />
+</form>
+<table><tbody>
+    {% for fileobj in result %}
+        <tr>
+        <td>{{ fileobj.tmp_filename }}</td>
+        <td>{{ fileobj.upload_filename }}</td>
+        <td>{{ fileobj.ts }}</td>
+        </tr>
+    {% endfor %}
+
+</tbody>
+</table>
 </body>
 </html>
