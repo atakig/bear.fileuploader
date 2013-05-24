@@ -14,3 +14,4 @@ tmp
 *.tpl.php
 composer.phar
 resource.db
+data

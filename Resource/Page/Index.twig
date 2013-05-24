@@ -15,9 +15,10 @@
 <table><tbody>
     {% for fileobj in result %}
         <tr>
-        <td>{{ fileobj.tmp_filename }}</td>
-        <td>{{ fileobj.upload_filename }}</td>
         <td>{{ fileobj.ts }}</td>
+        <td>{{ fileobj.upload_filename }}</td>
+        <td><a href="/storefiles?id={{  fileobj.id }}">DownLoad</a><td>
+        <td><a href="/storefiles?_method=DELETE&id={{ fileobj.id }}">Delete</a></td>
         </tr>
     {% endfor %}
 
