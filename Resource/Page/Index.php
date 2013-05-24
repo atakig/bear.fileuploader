@@ -35,7 +35,7 @@ class Index extends Page
      );
      */
 
-    public function onGet($name = 'BEAR.Sunday')
+    public function onGet($msg = '')
     {
         $data_dir = dirname(__FILE__) . '/../../data/';
         $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
@@ -51,6 +51,7 @@ class Index extends Page
           }
 
         $this['result'] = $result;
+        $this['msg'] = $msg;
         return $this;
     }
 }

@@ -43,18 +43,22 @@ class StoreFiles extends AbstractObject
         $tmp_filename = basename($_FILES['selfintro']['tmp_name']);
         $uploadfile = $data_dir . 'uploadfiles/'. $tmp_filename;
 
+        $msg = '';
         if (move_uploaded_file($_FILES['selfintro']['tmp_name'], $uploadfile)) {
             $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
             $stmt = $db->prepare('INSERT INTO upload_files(tmp_filename, upload_filename) VALUES (:tmp_filename, :upload_filename)');
             $stmt->bindValue(':tmp_filename', $tmp_filename, SQLITE3_TEXT);
             $stmt->bindValue(':upload_filename', $_FILES['selfintro']['name'], SQLITE3_TEXT);
             $result = $stmt->execute();
-            $this->body['value'] = "File is valid, and was successfully uploaded.\n" . var_dump($result);
+            $msg = urlencode("アップロード成功: " . $_FILES['selfintro']['name']);
         } else {
-            $this->body['value'] = "Possible file upload attack!\n";
+            $msg = urlencode("アップロード失敗");
         }
 
+        // redirect
+        $this->headers = ['Location' => '/?msg=' . $msg];
         return $this;
+
     }
 
 
@@ -72,6 +76,7 @@ class StoreFiles extends AbstractObject
             $ts = $res['ts'];
             break;
         }
+        $msg = '';
         // move to backup table
         $stmt = $db->prepare('INSERT INTO upload_files_bkup(id, tmp_filename, upload_filename, ts) VALUES (:id, :tmp_filename, :upload_filename, :ts)');
         $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
@@ -81,7 +86,8 @@ class StoreFiles extends AbstractObject
 
         $result = $stmt->execute();
         if ($result === false){
-            $this->body['value'] = "Faild backup delete data";
+            $msg = urlencode('バックアップデータの作成に失敗しました');
+            $this->headers = ['Location' => '/?msg=Faild-Data-BackUp'];
             return $this;
         }
 
@@ -90,18 +96,22 @@ class StoreFiles extends AbstractObject
         $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
         $result = $stmt->execute();
         if ($result === false){
-            $this->body['value'] = "Faild Delete Data";
+            $msg = urlencode('データの削除に失敗しました');
+            $this->headers = ['Location' => "/?msg=$msg"];
             return $this;
         }
 
         // Delete file
         $result = unlink($data_dir . 'uploadfiles/' . $tmp_filename);
         if ($result === false){
-            $this->body['value'] = "Faild Delete File";
+            $msg = urlencode('ファイルの削除に失敗しました');
+            $this->headers = ['Location' => "/?msg=$msg"];
             return $this;
         }
 
-        $this->body['value'] = 'Success Delete';
+        // redirect
+        $msg = urlencode('削除 成功');
+        $this->headers = ['Location' => "/?msg=$msg"];
         return $this;
     }
 

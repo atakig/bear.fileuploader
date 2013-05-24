@@ -1,3 +1,11 @@
+section.msg {
+    font-size: 120%;
+    color: #0000cd;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
 section.form-upload{
     margin: 5px 10px 10px 10px;
 }
@@ -20,6 +28,7 @@ table.file-list {
     border-bottom: 1px solid rgba(0,0,0,.1);
     font-size: 85%;
     background-color: #EEE;
+    margin-bottom: 30px;
 }
 @include box-shadow(rgba(255,255,255,1) 0 1px 0);
 

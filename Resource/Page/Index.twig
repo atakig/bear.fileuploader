@@ -8,8 +8,11 @@
     <script src="/assets/js/jquery.js"></script>
 </head>
 <body>
+{% if msg %}
+<section class="msg">{{ msg }}</section>
+{% endif %}
 <section class="form-upload">
-    <p class="message">自己紹介用のpdfを指定して、uploadボタンを押してください。</p>
+    <p class="message">自己紹介用のpdfを選択して、uploadボタンを押してください。</p>
     <form method="post" action="/storefiles" enctype="multipart/form-data">
         <input type="file" name="selfintro" />
         <input type="submit" value="upload" />
@@ -33,5 +36,6 @@
         {% endfor %}
     </tbody></table>
 </section>
+<p>&nbsp;&nbsp;※&nbsp;他人のファイルを削除しないよう、十分ご注意願います</p>
 </body>
 </html>
