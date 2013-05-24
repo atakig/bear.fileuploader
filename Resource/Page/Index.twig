@@ -3,26 +3,35 @@
 <head>
     <meta charset="utf-8">
     <title>File Uploader</title>
-    <link href="/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/normalize.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     <script src="/assets/js/jquery.js"></script>
 </head>
 <body>
-<form method="post" action="/storefiles" enctype="multipart/form-data">
-    <input type="file" name="selfintro" />
-    <input type="submit" value="upload" />
-</form>
-<table><tbody>
-    {% for fileobj in result %}
-        <tr>
-        <td>{{ fileobj.ts }}</td>
-        <td>{{ fileobj.upload_filename }}</td>
-        <td><a href="/storefiles?id={{  fileobj.id }}">DownLoad</a><td>
-        <td><a href="/storefiles?_method=DELETE&id={{ fileobj.id }}">Delete</a></td>
-        </tr>
-    {% endfor %}
+<section class="form-upload">
+    <p class="message">自己紹介用のpdfを指定して、uploadボタンを押してください。</p>
+    <form method="post" action="/storefiles" enctype="multipart/form-data">
+        <input type="file" name="selfintro" />
+        <input type="submit" value="upload" />
+    </form>
+</section>
 
-</tbody>
-</table>
+<section>
+    <p class="title">アップロードファイル一覧</p>
+    <table class="file-list"><tbody>
+        {% for fileobj in result %}
+            <tr>
+            <td class="ts">{{ fileobj.ts }}</td>
+            <td class="filename">{{ fileobj.upload_filename }}</td>
+            <td class="download">
+                <a href="/storefiles?id={{  fileobj.id }}">DownLoad</a>
+            </td>
+            <td class="delete">
+                <a href="/storefiles?_method=DELETE&id={{ fileobj.id }}">Delete</a>
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody></table>
+</section>
 </body>
 </html>

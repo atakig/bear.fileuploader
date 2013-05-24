@@ -1,0 +1,36 @@
+section.form-upload{
+    margin: 5px 10px 10px 10px;
+}
+
+section.file-list{
+    margin: 10px 10px 10px 10px;
+}
+
+p.message{
+    margin: 10px 10px 5px 5px;
+}
+
+p.title{
+    margin: 30px 5px 5px 5px;
+    border-left: solid 5px #528CE0;
+    padding-left: 5px;
+}
+
+table.file-list {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    font-size: 85%;
+    background-color: #EEE;
+}
+@include box-shadow(rgba(255,255,255,1) 0 1px 0);
+
+table.file-list td {
+    border: solid 1px #F8F8F8;
+/*    background-color: #bdc7d8; */
+    margin: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
+}
+
+table.file-list td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
