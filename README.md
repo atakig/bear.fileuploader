@@ -1,6 +1,3 @@
-BEAR.FileUpload
-=============================
-
 BEAR.FileUpload relies on BEAR.Package which can be downloaded [here](http://github.com/koriym/BEAR.Package).
 
 This is a skeleton app which can be used a base for your own BEAR.Sunday applications. You can build the app by entering the following command.
@@ -48,3 +45,5 @@ Other
 ----------------------------
 
 Other custom classes you may want to add can be added freely, some predefined namespaces such as `Annotation`, and `Interceptor` have been prepared for you. Tests should be added to the tests directory in an appropriate namespace.
+
+PHPカンファレンス関西の自己紹介ファイルアップロード用
