@@ -13,7 +13,7 @@
 {% endif %}
 <section class="form-upload">
     <p class="message">自己紹介用のpdfを選択して、uploadボタンを押してください。</p>
-    <form method="post" action="/storefiles" enctype="multipart/form-data">
+    <form method="post" action="/StoreFiles" enctype="multipart/form-data">
         <input type="file" name="selfintro" />
         <input type="submit" value="upload" />
     </form>
@@ -27,10 +27,10 @@
             <td class="ts">{{ fileobj.ts }}</td>
             <td class="filename">{{ fileobj.upload_filename }}</td>
             <td class="download">
-                <a href="/storefiles?id={{  fileobj.id }}">DownLoad</a>
+                <a href="/StoreFiles?id={{  fileobj.id }}">DownLoad</a>
             </td>
             <td class="delete">
-                <a href="/storefiles?_method=DELETE&id={{ fileobj.id }}">Delete</a>
+                <a href="/StoreFiles?_method=DELETE&id={{ fileobj.id }}">Delete</a>
             </td>
             </tr>
         {% endfor %}
