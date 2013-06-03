@@ -24,6 +24,7 @@ class Index extends Page
         id INTEGER PRIMARY KEY,
         tmp_filename TEXT,
         upload_filename TEXT,
+        memo TEXT,
         ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
@@ -31,6 +32,7 @@ class Index extends Page
          id INTEGER,
          tmp_filename TEXT,
          upload_filename TEXT,
+         memo TEXT,
          ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
      );
      */
@@ -45,6 +47,7 @@ class Index extends Page
         while($res = $t->fetchArray(SQLITE3_ASSOC)){
               $result[$i]['tmp_filename'] = $res['tmp_filename'];
               $result[$i]['upload_filename'] = $res['upload_filename'];
+              $result[$i]['memo'] = $res['memo'];
               $result[$i]['ts'] = $res['ts'];
               $result[$i]['id'] = $res['id'];
               $i++;

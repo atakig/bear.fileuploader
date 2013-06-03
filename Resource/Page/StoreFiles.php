@@ -43,12 +43,15 @@ class StoreFiles extends AbstractObject
         $tmp_filename = basename($_FILES['selfintro']['tmp_name']);
         $uploadfile = $data_dir . 'uploadfiles/'. $tmp_filename;
 
+        $memo = $_POST['memo'];
+
         $msg = '';
         if (move_uploaded_file($_FILES['selfintro']['tmp_name'], $uploadfile)) {
             $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
-            $stmt = $db->prepare('INSERT INTO upload_files(tmp_filename, upload_filename) VALUES (:tmp_filename, :upload_filename)');
+            $stmt = $db->prepare('INSERT INTO upload_files(tmp_filename, upload_filename, memo) VALUES (:tmp_filename, :upload_filename, :memo)');
             $stmt->bindValue(':tmp_filename', $tmp_filename, SQLITE3_TEXT);
             $stmt->bindValue(':upload_filename', $_FILES['selfintro']['name'], SQLITE3_TEXT);
+            $stmt->bindValue(':memo', $memo, SQLITE3_TEXT);
             $result = $stmt->execute();
             $msg = urlencode("アップロード成功: " . $_FILES['selfintro']['name']);
         } else {

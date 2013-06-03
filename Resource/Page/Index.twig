@@ -6,6 +6,19 @@
     <link href="/css/normalize.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <script src="/assets/js/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+
+        });
+        function activate(id) {
+            if ($('#btn' + id).text() == 'Update!') {
+                alert('Update');
+            } else {
+                $("#memo" + id).removeAttr("disabled");
+                $("#btn" + id).text('Update!');
+            }
+        }
+    </script>
 </head>
 <body>
 {% if msg %}
@@ -15,7 +28,8 @@
     <p class="message">自己紹介用のpdfを選択して、uploadボタンを押してください。</p>
     <form method="post" action="/StoreFiles" enctype="multipart/form-data">
         <input type="file" name="selfintro" />
-        <input type="submit" value="upload" />
+        <input type="submit" value="upload" /><br />
+        メモ&nbsp;<input type="text" name="memo" class="memo" />
     </form>
 </section>
 
@@ -32,6 +46,14 @@
             <td class="delete">
                 <a href="/StoreFiles?_method=DELETE&id={{ fileobj.id }}">Delete</a>
             </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <form name="update_memo" action="" method="post">
+                        <input id="memo{{ fileobj.id }}" type="text" value="{{ fileobj.memo }}" disabled="disable">
+                    </form>
+                </td>
+                <td><a onclick="activate({{ fileobj.id }})" id="btn{{ fileobj.id }}">Mod</a></td>
             </tr>
         {% endfor %}
     </tbody></table>
