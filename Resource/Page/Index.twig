@@ -12,7 +12,7 @@
         });
         function activate(id) {
             if ($('#btn' + id).text() == 'Update!') {
-                alert('Update');
+              $('#memo_form' + id).submit();
             } else {
                 $("#memo" + id).removeAttr("disabled");
                 $("#btn" + id).text('Update!');
@@ -49,8 +49,9 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <form name="update_memo" action="" method="post">
-                        <input id="memo{{ fileobj.id }}" type="text" value="{{ fileobj.memo }}" disabled="disable">
+                    <form id="memo_form{{ fileobj.id}}" action="/Memo" method="post">
+                        <input id="memo{{ fileobj.id }}" name="memo" type="text" value="{{ fileobj.memo }}" disabled="disable" />
+                        <input type="hidden" value="{{ fileobj.id}}" name="id" />
                     </form>
                 </td>
                 <td><a onclick="activate({{ fileobj.id }})" id="btn{{ fileobj.id }}">Mod</a></td>
