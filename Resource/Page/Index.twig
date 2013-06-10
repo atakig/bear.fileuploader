@@ -11,11 +11,21 @@
 
         });
         function activate(id) {
-            if ($('#btn' + id).text() == 'Update!') {
-              $('#memo_form' + id).submit();
+            if ($('#btn' + id).text() == 'Update?') {
+                $.ajax({
+                    url: "/Memo",
+                    type: "POST",
+                    data : {
+                        id: $("#id" + id).val(),
+                        memo : $("memo" + id).val()
+                    },
+                    success : function(){
+                        $("#btn" + id).text('Updated!!!');
+                    }
+                });
             } else {
                 $("#memo" + id).removeAttr("disabled");
-                $("#btn" + id).text('Update!');
+                $("#btn" + id).text('Update?');
             }
         }
     </script>
@@ -29,7 +39,7 @@
     <form method="post" action="/StoreFiles" enctype="multipart/form-data">
         <input type="file" name="selfintro" />
         <input type="submit" value="upload" /><br />
-        メモ&nbsp;<input type="text" name="memo" class="memo" />
+        メモ&nbsp;<textarea name="memo" /></textarea>
     </form>
 </section>
 
@@ -50,8 +60,8 @@
             <tr>
                 <td colspan="3">
                     <form id="memo_form{{ fileobj.id}}" action="/Memo" method="post">
-                        <input id="memo{{ fileobj.id }}" name="memo" type="text" value="{{ fileobj.memo }}" disabled="disable" />
-                        <input type="hidden" value="{{ fileobj.id}}" name="id" />
+                        <textarea id="memo{{ fileobj.id }}" name="memo" disabled="disable" />{{ fileobj.memo }}</textarea>
+                        <input type="hidden" value="{{ fileobj.id}}" name="id{{ fileobj.id }}" />
                     </form>
                 </td>
                 <td><a onclick="activate({{ fileobj.id }})" id="btn{{ fileobj.id }}">Mod</a></td>
