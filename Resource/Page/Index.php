@@ -4,6 +4,9 @@ namespace FileUpload\Resource\Page;
 
 use BEAR\Resource\AbstractObject as Page;
 use BEAR\Sunday\Inject\ResourceInject;
+use FileUpload\Module\App\AppModule;
+use Ray\Di\Di\Inject;
+use Ray\Di\Di\Named;
 
 /**
  * Index page
@@ -11,6 +14,7 @@ use BEAR\Sunday\Inject\ResourceInject;
 class Index extends Page
 {
     use ResourceInject;
+    private $conn = '';
 
     /**
      * @var array
@@ -19,6 +23,14 @@ class Index extends Page
         'result' =>  ''
     ];
 
+    /**
+     * @Inject
+     * @Named("conn")
+     */
+    public function __construct($conn) {
+        echo "######" .$conn . "######" . PHP_EOL;
+        $this->conn = $conn;
+    }
     /*
       create table upload_files(
         id INTEGER PRIMARY KEY,
@@ -39,8 +51,14 @@ class Index extends Page
 
     public function onGet($msg = '')
     {
-        $data_dir = dirname(__FILE__) . '/../../data/';
-        $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
+        $injecter = Inject::create([new AppModule]);
+var_dump($injecter);
+//        $data_dir = dirname(__FILE__) . '/../../data/';
+//        $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
+        echo "----------------" . PHP_EOL;
+        echo $this->conn . PHP_EOL;
+        echo "----------------" . PHP_EOL;
+        $db = new \SQLite3($this->conn);
         $t = $db->query('SELECT * FROM upload_files');
         $result = [];
         $i = 0;
