@@ -25,6 +25,7 @@
                 });
             } else {
                 $("#memo" + id).removeAttr("disabled");
+                $("#memo" + id).addClass("activate");
                 $("#btn" + id).text('Update?');
             }
         }
@@ -39,7 +40,7 @@
     <form method="post" action="/StoreFiles" enctype="multipart/form-data">
         <input type="file" name="selfintro" />
         <input type="submit" value="upload" /><br />
-        メモ&nbsp;<textarea name="memo" /></textarea>
+        メモ&nbsp;<textarea name="memo" class="memo" /></textarea>
     </form>
 </section>
 
@@ -60,7 +61,7 @@
             <tr>
                 <td colspan="3">
                     <form id="memo_form{{ fileobj.id}}" action="/Memo" method="post">
-                        <textarea id="memo{{ fileobj.id }}" name="memo" disabled="disable" />{{ fileobj.memo }}</textarea>
+                        <textarea id="memo{{ fileobj.id }}" name="memo" disabled="disable" class="memo no-activate"/>{{ fileobj.memo }}</textarea>
                         <input type="hidden" value="{{ fileobj.id}}" name="id{{ fileobj.id }}" />
                     </form>
                 </td>
