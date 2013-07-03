@@ -1,3 +1,11 @@
+Bear.sunday の apps で動かすことが可能です。
+data/uploadfiles.sqlite というsqlite3のファイルを作成して、
+data/create_table.sqlファイルでテーブルを作成してください。
+
+ファイルのアップロード、ダウンロード、削除とメモの登録が可能です。
+
+
+
 BEAR.FileUpload relies on BEAR.Package which can be downloaded [here](http://github.com/koriym/BEAR.Package).
 
 This is a skeleton app which can be used a base for your own BEAR.Sunday applications. You can build the app by entering the following command.
