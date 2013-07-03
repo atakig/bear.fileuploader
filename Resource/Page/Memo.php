@@ -3,6 +3,7 @@
 namespace FileUpload\Resource\Page;
 
 use BEAR\Resource\AbstractObject;
+use BEAR\Resource\ResourceInterface;
 use BEAR\Sunday\Inject\ResourceInject;
 use BEAR\Package\Module\Database\Dbal\Setter\DbSetterTrait;
 use BEAR\Sunday\Annotation\Db;
@@ -16,6 +17,7 @@ use PDO;
 class Memo extends AbstractObject
 {
     use ResourceInject;
+    use DbSetterTrait;
 
     public $body = [
         'name' => ''

@@ -56,13 +56,6 @@ table.file-list td {
     padding-left: 5px; /* 余白 */
     height: 50px; /* 高さ */
 }
-
-.no-activate {
-    background-color: #D4D0C8; /* 背景 */
-    border: 1px solid #999999; /* 罫線 */
-}
-
-.activate {
-    background-color: #FFFFFF;
-    border: 1px solid;
+.button-update {
+    float: right;
 }

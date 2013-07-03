@@ -33,6 +33,7 @@ class StoreFiles extends AbstractObject
         $stmt->execute();
         $result = $stmt->fetch();
 
+        $data_dir = dirname(__FILE__) . '/../../data/';
         header("Content-Type: application/pdf");
         header('Content-Disposition: attachment; filename=' . $result['upload_filename']);
         readfile($data_dir . 'uploadfiles/' . $result['tmp_filename']);

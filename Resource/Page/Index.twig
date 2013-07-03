@@ -7,27 +7,12 @@
     <link href="/css/style.css" rel="stylesheet">
     <script src="/assets/js/jquery.js"></script>
     <script>
-        $(document).ready(function(){
-
-        });
-        function activate(id) {
-            if ($('#btn' + id).text() == 'Update?') {
-                $.ajax({
-                    url: "/Memo",
-                    type: "POST",
-                    data : {
-                        id: $("#id" + id).val(),
-                        memo : $("memo" + id).val()
-                    },
-                    success : function(){
-                        $("#btn" + id).text('Updated!!!');
-                    }
-                });
-            } else {
-                $("#memo" + id).removeAttr("disabled");
-                $("#memo" + id).addClass("activate");
-                $("#btn" + id).text('Update?');
-            }
+        function activate_memo(id){
+            var memo = $('span#memo' + id).text();
+            $('td#area' + id).html('<form method="post" action="/Memo"><textarea class="memo" name="memo">'
+                    + memo
+                    + '</textarea><input type="hidden" name="id" value="' + id + '"/>'
+                    + '<input class="button-update" type="submit" value="更新"></form>');
         }
     </script>
 </head>
@@ -59,13 +44,10 @@
             </td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <form id="memo_form{{ fileobj.id}}" action="/Memo" method="post">
-                        <textarea id="memo{{ fileobj.id }}" name="memo" disabled="disable" class="memo no-activate"/>{{ fileobj.memo }}</textarea>
-                        <input type="hidden" value="{{ fileobj.id}}" name="id{{ fileobj.id }}" />
-                    </form>
+                <td colspan="4" id="area{{ fileobj.id }}">
+                    <span id="memo{{ fileobj.id }}">{{ fileobj.memo }}</span>
+                    <input class="button-update" type="button" onclick="activate_memo({{ fileobj.id}}); return false;" value="変更" />
                 </td>
-                <td><a onclick="activate({{ fileobj.id }})" id="btn{{ fileobj.id }}">Mod</a></td>
             </tr>
         {% endfor %}
     </tbody></table>
