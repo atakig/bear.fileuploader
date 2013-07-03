@@ -47,10 +47,5 @@ class AppModule extends AbstractModule
         // install twig
         $this->install(new ProvideModule\TemplateEngine\Twig\TwigModule($this));
 
-        $data_dir = dirname(__FILE__) . '/../../data/';
-//        $this->bind()->annotatedWith("database")->toInstance(new \Sqlite3($data_dir . 'uploadFiles.sqlite'));
-        $this->bind()->annotatedWith("conn")->toInstance($data_dir . 'uploadFiles.sqlite');
-
-
     }
 }

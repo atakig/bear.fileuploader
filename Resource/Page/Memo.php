@@ -4,10 +4,14 @@ namespace FileUpload\Resource\Page;
 
 use BEAR\Resource\AbstractObject;
 use BEAR\Sunday\Inject\ResourceInject;
-use Ray\Di\Di\Inject;
+use BEAR\Package\Module\Database\Dbal\Setter\DbSetterTrait;
+use BEAR\Sunday\Annotation\Db;
+use PDO;
 
 /**
- * Untitled
+ * Memo
+ *
+ * @Db
  */
 class Memo extends AbstractObject
 {
@@ -24,11 +28,9 @@ class Memo extends AbstractObject
 
     public function onPost()
     {
-        $data_dir = dirname(__FILE__) . '/../../data/';
-        $db = new \SQLite3($data_dir . 'uploadFiles.sqlite');
-        $stmt = $db->prepare('UPDATE upload_files SET memo = :memo WHERE id = :id');
-        $stmt->bindValue(':memo', $_POST['memo'], SQLITE3_TEXT);
-        $stmt->bindValue(':id', $_POST['id'], SQLITE3_INTEGER);
+        $stmt = $this->db->prepare('UPDATE upload_files SET memo = :memo WHERE id = :id');
+        $stmt->bindValue(':memo', $_POST['memo'], PDO::PARAM_STR);
+        $stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
         $result = $stmt->execute();
         if ($result === false) {
             $msg = urlencode('メモの更新に失敗しました');
