@@ -23,7 +23,7 @@
 <section class="form-upload">
     <p class="message">自己紹介用のpdfを選択して、uploadボタンを押してください。</p>
     <form method="post" action="/StoreFiles" enctype="multipart/form-data">
-        <input type="file" name="selfintro" />
+        <input type="file" name="selfintro" required/>
         <input type="submit" value="upload" /><br />
         メモ&nbsp;<textarea name="memo" class="memo" /></textarea>
     </form>
