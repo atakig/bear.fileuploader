@@ -8,6 +8,8 @@ use BEAR\Sunday\Inject\ResourceInject;
 use BEAR\Package\Module\Database\Dbal\Setter\DbSetterTrait;
 use BEAR\Sunday\Annotation\Db;
 use PDO;
+use Ray\Di\Di\Inject;
+use Ray\Di\Di\Named;
 
 /**
  * StoreFiles
@@ -19,6 +21,17 @@ class StoreFiles extends AbstractObject
     use ResourceInject;
     use DbSetterTrait;
 
+    private $img_real_path = '';
+
+    /**
+     *
+     * @Inject
+     * @Named("img_real_path")
+     *
+     */
+    public function __construct($img_real_path){
+        $this->img_real_path = $img_real_path;
+    }
 
     public $body = [
         'value' => ''
@@ -36,16 +49,18 @@ class StoreFiles extends AbstractObject
         $data_dir = dirname(__FILE__) . '/../../data/';
         header("Content-Type: application/pdf");
         header('Content-Disposition: attachment; filename=' . $result['upload_filename']);
-        readfile($data_dir . 'uploadfiles/' . $result['tmp_filename']);
+        // readfile($data_dir . 'uploadfiles/' . $result['tmp_filename']);
+        readfile($this->img_real_path . $result['tmp_filename']);
         exit();
     }
 
     // upload file
     public function onPost()
     {
-        $data_dir = dirname(__FILE__) . '/../../data/';
+        //$data_dir = dirname(__FILE__) . '/../../data/';
         $tmp_filename = basename($_FILES['selfintro']['tmp_name']);
-        $uploadfile = $data_dir . 'uploadfiles/'. $tmp_filename;
+        //$uploadfile = $data_dir . 'uploadfiles/'. $tmp_filename;
+        $uploadfile = $this->img_real_path . $tmp_filename;
 
         $memo = $_POST['memo'];
 
@@ -103,8 +118,10 @@ class StoreFiles extends AbstractObject
         }
 
         // Delete file
-        $data_dir = dirname(__FILE__) . '/../../data/';
+//        $data_dir = dirname(__FILE__) . '/../../data/';
         $result = unlink($data_dir . 'uploadfiles/' . $tmp_filename);
+        $result = unlink($this->img_real_path . $tmp_filename);
+
         if ($result === false){
             $msg = urlencode('ファイルの削除に失敗しました');
             $this->headers = ['Location' => "/?msg=$msg"];

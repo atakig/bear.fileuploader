@@ -5,8 +5,14 @@
     <title>File Uploader</title>
     <link href="/css/normalize.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <script src="/assets/js/jquery.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.mousewheel-3.0.6.pack.js"></script>
+    <link rel="stylesheet" href="/css/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="/js/jquery.fancybox.pack.js?v=2.1.5"></script>
     <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+        });
         function activate_memo(id){
             var memo = $('span#memo' + id).text();
             $('td#area' + id).html('<form method="post" action="/Memo"><textarea class="memo" name="memo">'
@@ -35,7 +41,7 @@
         {% for fileobj in result %}
             <tr>
             <td class="ts">{{ fileobj.ts }}</td>
-            <td class="filename">{{ fileobj.upload_filename }}</td>
+            <td class="filename"><a href="{{ img_web_path }}{{ fileobj.tmp_filename }}.jpg" class="fancybox" title="{{ fileobj.upload_filename }}">{{ fileobj.upload_filename }}</a></td>
             <td class="download">
                 <a href="/StoreFiles?id={{  fileobj.id }}">DownLoad</a>
             </td>
