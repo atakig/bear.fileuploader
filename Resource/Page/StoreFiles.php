@@ -57,17 +57,27 @@ class StoreFiles extends AbstractObject
     // upload file
     public function onPost()
     {
-        //$data_dir = dirname(__FILE__) . '/../../data/';
-        $tmp_filename = basename($_FILES['selfintro']['tmp_name']);
-        //$uploadfile = $data_dir . 'uploadfiles/'. $tmp_filename;
+        $tmp_name = $_FILES['selfintro']['tmp_name'];
+        $mime = $_FILES['selfintro']['type'];
+        $ext = pathinfo($tmp_name, PATHINFO_EXTENSION);
+        $tmp_filename = crypt(basename($tmp_name), uniqid());
+
         $uploadfile = $this->img_real_path . $tmp_filename;
 
         $memo = $_POST['memo'];
 
-        if (move_uploaded_file($_FILES['selfintro']['tmp_name'], $uploadfile)) {
-            $stmt = $this->db->prepare('INSERT INTO upload_files(tmp_filename, upload_filename, memo) VALUES (:tmp_filename, :upload_filename, :memo)');
+        echo $uploadfile . PHP_EOL;
+        echo $tmp_name . PHP_EOL;
+
+        if (move_uploaded_file($tmp_name, $uploadfile)) {
+            $sql = <<<SQL
+INSERT INTO upload_files(tmp_filename, upload_filename, mime, ext, memo) VALUES (:tmp_filename, :upload_filename, :mime, :ext, :memo)
+SQL;
+            $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':tmp_filename', $tmp_filename, PDO::PARAM_STR);
             $stmt->bindValue(':upload_filename', $_FILES['selfintro']['name'], PDO::PARAM_STR);
+            $stmt->bindValue(':mime', $mime, PDO::PARAM_STR);
+            $stmt->bindValue(':ext', $ext, PDO::PARAM_STR);
             $stmt->bindValue(':memo', $memo, PDO::PARAM_STR);
             $stmt->execute();
             $msg = urlencode("アップロード成功: " . $_FILES['selfintro']['name']);

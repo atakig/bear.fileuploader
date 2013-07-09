@@ -47,9 +47,9 @@ class AppModule extends AbstractModule
         // install twig
         $this->install(new ProvideModule\TemplateEngine\Twig\TwigModule($this));
 
-        $this->bind()->annotatedWith("img_web_path")->toInstance('/img/uploadfiles/');
+        $this->bind()->annotatedWith("img_tmp_path")->toInstance('/img/tmp/');
 
-        $img_real_path = dirname(__FILE__) . '/../../public/img/uploadfiles/';
+        $img_real_path = dirname(__FILE__) . '/../../data/uploadfiles/';
         $this->bind()->annotatedWith("img_real_path")->toInstance($img_real_path);
 
     }
