@@ -14,5 +14,6 @@ tmp
 *.tpl.php
 composer.phar
 resource.db
-data
+data/log
+data/uploadfiles*
 public/img/uploadfiles
