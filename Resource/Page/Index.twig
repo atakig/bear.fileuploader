@@ -41,7 +41,7 @@
         {% for fileobj in result %}
             <tr>
             <td class="ts">{{ fileobj.ts }}</td>
-            <td class="filename"><a href="{{ img_web_path }}{{ fileobj.tmp_filename }}.jpg" class="fancybox" title="{{ fileobj.upload_filename }}">{{ fileobj.upload_filename }}</a></td>
+            <td class="filename"><a href="{{ img_tmp_path }}{{ fileobj.tmp_filename }}.jpg" class="fancybox" title="{{ fileobj.upload_filename }}">{{ fileobj.upload_filename }}</a></td>
             <td class="download">
                 <a href="/StoreFiles?id={{  fileobj.id }}">DownLoad</a>
             </td>

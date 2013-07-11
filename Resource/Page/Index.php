@@ -21,14 +21,14 @@ class Index extends Page
     use ResourceInject;
     use DbSetterTrait;
 
-    private $img_web_path = '';
+    private $img_tmp_path = '';
 
     /**
      * @Inject
-     * @Named("img_web_path")
+     * @Named("img_tmp_path")
      */
-    public function  __construct($img_web_path){
-        $this->img_web_path = $img_web_path;
+    public function  __construct($img_tmp_path){
+        $this->img_tmp_path = $img_tmp_path;
     }
     /**
      * @var array
@@ -42,7 +42,7 @@ class Index extends Page
         $stmt = $this->db->query('SELECT * FROM upload_files');
         $this['result'] = $stmt->fetchAll();
         $this['msg'] = $msg;
-        $this["img_web_path"] = $this->img_web_path;
+        $this["img_tmp_path"] = $this->img_tmp_path;
         return $this;
     }
 }

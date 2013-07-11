@@ -22,15 +22,18 @@ class StoreFiles extends AbstractObject
     use DbSetterTrait;
 
     private $img_real_path = '';
+    private $img_tmp_dir = '';
 
     /**
      *
      * @Inject
      * @Named("img_real_path")
+     * @Named("img_tmp_dir")
      *
      */
-    public function __construct($img_real_path){
+    public function __construct($img_real_path, $img_tmp_dir){
         $this->img_real_path = $img_real_path;
+        $this->img_tmp_dir = $img_tmp_dir;
     }
 
     public $body = [
@@ -40,17 +43,24 @@ class StoreFiles extends AbstractObject
     // Download File
     public function onGet($id)
     {
-        $stmt = $this->db->prepare('SELECT tmp_filename, upload_filename FROM upload_files WHERE id = :id');
+        $stmt = $this->db->prepare('SELECT tmp_filename, upload_filename, mime, ext FROM upload_files WHERE id = :id');
 
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch();
 
-        $data_dir = dirname(__FILE__) . '/../../data/';
-        header("Content-Type: application/pdf");
+//        $data_dir = dirname(__FILE__) . '/../../data/';
+        echo $this->img_real_path . $result['tmp_filename'] . '<br />';
+        echo $this->img_tmp_dir;
+        exit;
+        copy($this->img_real_path . $result['tmp_filename'], $this->img_tmp_dir);
+
+//        header("Content-Type: application/pdf");
+        header("Content-Type: " . $result['mime']);
+
         header('Content-Disposition: attachment; filename=' . $result['upload_filename']);
         // readfile($data_dir . 'uploadfiles/' . $result['tmp_filename']);
-        readfile($this->img_real_path . $result['tmp_filename']);
+        readfile($this->img_tmp_dir . $result['tmp_filename']);
         exit();
     }
 

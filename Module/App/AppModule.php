@@ -52,5 +52,7 @@ class AppModule extends AbstractModule
         $img_real_path = dirname(__FILE__) . '/../../data/uploadfiles/';
         $this->bind()->annotatedWith("img_real_path")->toInstance($img_real_path);
 
+        $img_tmp_dir = dirname(__FILE__) . '/../../public/img/tmp/';
+        $this->bind()->annotatedWith("img_tmp_dir")->toInstance($img_tmp_dir);
     }
 }
