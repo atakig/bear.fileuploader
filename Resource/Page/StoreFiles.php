@@ -139,7 +139,7 @@ SQL;
 
         // Delete file
 //        $data_dir = dirname(__FILE__) . '/../../data/';
-        $result = unlink($data_dir . 'uploadfiles/' . $tmp_filename);
+//        $result = unlink($data_dir . 'uploadfiles/' . $tmp_filename);
         $result = unlink($this->img_real_path . $tmp_filename);
 
         if ($result === false){
