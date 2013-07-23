@@ -39,7 +39,7 @@ class Index extends Page
 
     public function onGet($msg = '')
     {
-        $stmt = $this->db->query('SELECT * FROM upload_files');
+        $stmt = $this->db->query('SELECT id, tmp_filename, ts, memo FROM upload_files');
         $this['result'] = $stmt->fetchAll();
         $this['msg'] = $msg;
         $this["img_tmp_path"] = $this->img_tmp_path;
